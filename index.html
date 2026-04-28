@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IIDX INFINITAS × ☆12難易度表</title>
+<meta name="description" content="beatmania IIDX INFINITAS の収録曲のうち☆12非公式難易度表に掲載されている譜面を、楽曲パック・初期収録曲・BIT解禁曲などのカテゴリ別に集計したリファレンス。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho+B1:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --paper: #fffefb;
+    --ink: #1a1916;
+    --ink-soft: #46443e;
+    --ink-mute: #7a7770;
+    --rule: #d8d3c6;
+    --rule-soft: #e8e3d6;
+    --accent: #a02a3d;
+    --accent-soft: #f5e5e8;
+    --cat-mark: #1a3a5c;
+    --cat-mark-bg: #e3ecf3;
+
+    --t-Splus: #8a1f3a;  --t-Splus-bg: #fbe7eb;
+    --t-S:     #b8334b;  --t-S-bg:     #fcecef;
+    --t-Aplus: #c45a2f;  --t-Aplus-bg: #fbecdc;
+    --t-A:     #c98a1e;  --t-A-bg:     #fbf2d9;
+    --t-Bplus: #7a8a25;  --t-Bplus-bg: #f0f3da;
+    --t-B:     #4d8a55;  --t-B-bg:     #e1efe2;
+    --t-C:     #2d7a8a;  --t-C-bg:     #d8ecef;
+    --t-D:     #345b96;  --t-D-bg:     #dde7f5;
+    --t-E:     #5a5a78;  --t-E-bg:     #e3e2eb;
+    --t-F:     #777570;  --t-F-bg:     #ebe9e3;
+
+    --shadow-sm: 0 1px 2px rgba(26,25,22,.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Header ───────────────────────────── */
+  header.site {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 56px 28px 40px;
+  }
+  .site-inner { max-width: 1200px; margin: 0 auto; }
+  .eyebrow {
+    font-family: 'Bebas Neue', 'Noto Sans JP', sans-serif;
+    font-size: 13px; letter-spacing: .26em;
+    color: var(--accent); text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+  h1.title {
+    font-family: 'Shippori Mincho B1', 'Noto Sans JP', serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4.4vw, 46px);
+    line-height: 1.2;
+    margin: 0 0 18px;
+    letter-spacing: .01em;
+  }
+  h1.title .ja { display: block; }
+  h1.title .en {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    font-size: clamp(14px, 1.6vw, 18px);
+    letter-spacing: .22em;
+    color: var(--ink-mute);
+    margin-top: 10px;
+  }
+  .lede { max-width: 720px; color: var(--ink-soft); margin: 0 0 22px; font-size: 14.5px; }
+  .stat-row { display: flex; gap: 36px; margin-bottom: 22px; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px; line-height: 1;
+    letter-spacing: .04em; color: var(--ink);
+  }
+  .stat-label {
+    font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--ink-mute);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 4px;
+  }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 8px 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; color: var(--ink-mute);
+    padding-top: 18px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .meta a { color: var(--accent); text-decoration: none; border-bottom: 1px solid currentColor; }
+  .meta a:hover { color: var(--ink); }
+  .meta .sep { color: var(--rule); }
+
+  /* ── Filters ──────────────────────────── */
+  .filters {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    padding: 14px 28px;
+    box-shadow: var(--shadow-sm);
+  }
+  .filters-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 14px 24px;
+  }
+  .filter-group { display: flex; align-items: center; gap: 10px; }
+  .filter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ink-mute);
+  }
+  .seg {
+    display: inline-flex;
+    border: 1px solid var(--rule);
+    border-radius: 999px; overflow: hidden;
+    background: var(--bg);
+  }
+  .seg button {
+    appearance: none; border: 0; background: transparent;
+    color: var(--ink-soft);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 500; font-size: 13px;
+    padding: 6px 16px; cursor: pointer;
+    letter-spacing: .04em;
+  }
+  .seg button.on { background: var(--ink); color: var(--paper); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    appearance: none;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: var(--ink-soft);
+    padding: 4px 11px 5px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; font-weight: 500;
+    cursor: pointer; letter-spacing: .02em;
+    transition: all .15s ease;
+  }
+  .chip:hover { border-color: var(--ink-mute); }
+  .chip.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .chip[data-tier="S+"].on { background: var(--t-Splus); border-color: var(--t-Splus); }
+  .chip[data-tier="S"].on  { background: var(--t-S);     border-color: var(--t-S);     }
+  .chip[data-tier="A+"].on { background: var(--t-Aplus); border-color: var(--t-Aplus); }
+  .chip[data-tier="A"].on  { background: var(--t-A);     border-color: var(--t-A);     }
+  .chip[data-tier="B+"].on { background: var(--t-Bplus); border-color: var(--t-Bplus); }
+  .chip[data-tier="B"].on  { background: var(--t-B);     border-color: var(--t-B);     }
+  .chip[data-tier="C"].on  { background: var(--t-C);     border-color: var(--t-C);     }
+  .chip[data-tier="D"].on  { background: var(--t-D);     border-color: var(--t-D);     }
+  .chip[data-tier="E"].on  { background: var(--t-E);     border-color: var(--t-E);     }
+  .chip[data-tier="F"].on  { background: var(--t-F);     border-color: var(--t-F);     }
+  .chip-all { font-weight: 700; }
+  .filter-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+  .reset {
+    appearance: none; border: 0; background: transparent;
+    color: var(--ink-mute);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; cursor: pointer;
+    letter-spacing: .06em;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .reset:hover { color: var(--accent); }
+  .result-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--ink-mute); white-space: nowrap;
+  }
+  .result-count strong { color: var(--ink); }
+
+  /* ── Layout ───────────────────────────── */
+  .layout {
+    max-width: 1200px; margin: 0 auto;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  nav.toc {
+    position: sticky; top: 70px;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+    border-right: 1px solid var(--rule-soft);
+    padding-right: 8px;
+  }
+  .toc-block + .toc-block { margin-top: 18px; }
+  .toc-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px; letter-spacing: .26em;
+    color: var(--ink-mute);
+    margin: 0 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .toc ul { list-style: none; margin: 0; padding: 0; }
+  .toc-cat-link, .toc-pack-link {
+    display: block;
+    padding: 6px 0 6px 0;
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 13px; line-height: 1.4;
+    border-bottom: 1px dashed var(--rule-soft);
+    transition: all .12s ease;
+    position: relative;
+  }
+  .toc-cat-link {
+    font-weight: 700;
+    color: var(--cat-mark);
+  }
+  .toc-pack-link {
+    padding-left: 26px;
+  }
+  .toc-pack-link::before {
+    content: attr(data-num);
+    position: absolute;
+    left: 0; top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--ink-mute);
+    letter-spacing: .04em;
+  }
+  .toc-cat-link:hover, .toc-pack-link:hover {
+    color: var(--accent); padding-left: 4px;
+  }
+  .toc-pack-link:hover { padding-left: 30px; }
+  .toc a .cnt {
+    float: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--ink-mute);
+    background: var(--bg);
+    padding: 1px 7px; border-radius: 10px;
+  }
+  .toc a.empty { opacity: .45; }
+  .toc a.hidden-pack { display: none; }
+
+  main { min-width: 0; }
+
+  /* ── Section ──────────────────────────── */
+  section.sec { margin-bottom: 52px; scroll-margin-top: 80px; }
+  section.sec.hidden { display: none; }
+  .sec-head {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 6px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 10px;
+  }
+  .sec-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px; letter-spacing: .04em;
+    color: var(--accent); line-height: 1;
+  }
+  .sec-name {
+    font-family: 'Shippori Mincho B1', 'Noto Sans JP', serif;
+    font-weight: 700;
+    font-size: 19px; line-height: 1.4;
+    margin: 0; flex: 1;
+  }
+  .sec-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .14em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .sec-tag.cat {
+    background: var(--cat-mark-bg);
+    color: var(--cat-mark);
+  }
+  .sec-tag.pack {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .sec-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: .12em;
+    color: var(--ink-mute);
+    margin: 4px 0 18px;
+    text-transform: uppercase;
+  }
+  .sec-meta .visible-cnt { color: var(--ink); }
+  .sec-subtitle {
+    color: var(--ink-mute);
+    font-size: 13px;
+    margin: 0 0 12px;
+  }
+
+  /* Group sub-headers (for default/bit) */
+  .group-block { margin-bottom: 22px; }
+  .group-block.hidden { display: none; }
+  .group-label {
+    font-family: 'Shippori Mincho B1', 'Noto Sans JP', serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 18px 0 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .group-label .gcnt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: .04em;
+  }
+
+  table.songs {
+    width: 100%; border-collapse: collapse;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    box-shadow: var(--shadow-sm);
+  }
+  table.songs th, table.songs td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule-soft);
+    font-size: 13.5px;
+    vertical-align: middle;
+  }
+  table.songs th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; letter-spacing: .14em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    font-weight: 500;
+  }
+  table.songs tbody tr:last-child td { border-bottom: 0; }
+  table.songs tbody tr.hidden { display: none; }
+  table.songs tbody tr:hover td { background: var(--accent-soft); }
+
+  .col-title { width: 50%; }
+  .col-kind, .col-rank, .col-ver { width: auto; white-space: nowrap; }
+  .title-cell { font-weight: 500; }
+  .title-cell .star {
+    color: var(--accent);
+    margin-left: 6px;
+    font-size: 11px;
+    vertical-align: super;
+  }
+  .kind-pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; font-weight: 500;
+    padding: 1px 7px; border-radius: 3px;
+    letter-spacing: .08em;
+  }
+  .kind-A { background: #efece4; color: var(--ink-soft); }
+  .kind-L { background: var(--accent); color: var(--paper); }
+  .kind-H { background: #d8ecef; color: var(--t-C); }
+
+  .rank-cell {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500; font-size: 12.5px;
+    text-align: center;
+    padding: 6px 10px !important;
+  }
+  .rank-cell .badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 64px; padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: 600; letter-spacing: .03em;
+    border: 1px solid transparent;
+  }
+  .rank-cell .badge.kojinsa {
+    border-style: dashed;
+    border-color: currentColor;
+    background: transparent !important;
+  }
+  .rank-cell .badge[data-tier="S+"] { background: var(--t-Splus-bg); color: var(--t-Splus); }
+  .rank-cell .badge[data-tier="S"]  { background: var(--t-S-bg);     color: var(--t-S);     }
+  .rank-cell .badge[data-tier="A+"] { background: var(--t-Aplus-bg); color: var(--t-Aplus); }
+  .rank-cell .badge[data-tier="A"]  { background: var(--t-A-bg);     color: var(--t-A);     }
+  .rank-cell .badge[data-tier="B+"] { background: var(--t-Bplus-bg); color: var(--t-Bplus); }
+  .rank-cell .badge[data-tier="B"]  { background: var(--t-B-bg);     color: var(--t-B);     }
+  .rank-cell .badge[data-tier="C"]  { background: var(--t-C-bg);     color: var(--t-C);     }
+  .rank-cell .badge[data-tier="D"]  { background: var(--t-D-bg);     color: var(--t-D);     }
+  .rank-cell .badge[data-tier="E"]  { background: var(--t-E-bg);     color: var(--t-E);     }
+  .rank-cell .badge[data-tier="F"]  { background: var(--t-F-bg);     color: var(--t-F);     }
+  .rank-cell .empty { color: var(--ink-mute); }
+  .ver-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ink-mute);
+    font-size: 12px; text-align: right;
+  }
+  .empty-pack {
+    padding: 22px 14px;
+    color: var(--ink-mute);
+    font-size: 13px; text-align: center;
+    background: var(--paper);
+    border: 1px dashed var(--rule);
+  }
+
+  .state-msg {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 40px 28px;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 14px;
+  }
+  .state-msg.error { color: var(--accent); }
+  .spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid var(--rule);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  footer.site {
+    border-top: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 32px 28px;
+    margin-top: 80px;
+    color: var(--ink-mute);
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  footer.site .inner { max-width: 1200px; margin: 0 auto; }
+  footer.site a { color: var(--accent); }
+
+  @media (max-width: 880px) {
+    header.site { padding: 36px 20px 28px; }
+    .layout { grid-template-columns: 1fr; gap: 12px; padding: 20px; }
+    nav.toc {
+      position: static; max-height: none;
+      border-right: 0; border-bottom: 1px solid var(--rule);
+      padding: 0 0 16px; margin-bottom: 8px;
+    }
+    .filters { padding: 12px 16px; }
+    .filter-actions { margin-left: 0; width: 100%; justify-content: space-between; }
+    table.songs th, table.songs td { padding: 8px 8px; font-size: 12.5px; }
+    .col-ver { display: none; }
+    .sec-name { font-size: 16px; }
+    .sec-num { font-size: 24px; }
+    .stat-num { font-size: 28px; }
+    .rank-cell .badge { min-width: 52px; padding: 2px 6px; font-size: 11.5px; }
+    .group-label { font-size: 13px; }
+  }
+  @media (max-width: 520px) {
+    .col-kind { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <p class="eyebrow">beatmania IIDX INFINITAS × SP☆12</p>
+    <h1 class="title">
+      <span class="ja">INFINITAS × ☆12難易度表</span>
+      <span class="en">Lv.12 Difficulty Reference</span>
+    </h1>
+    <p class="lede">
+      INFINITAS の収録曲のうち、SP☆12非公式難易度表に掲載されている譜面を、
+      新規追加曲・初期収録曲・DJP/BIT解禁曲・楽曲パックのカテゴリ別に集計しています。
+      ノマゲ／ハードの切替、難易度帯による絞込みに対応。
+    </p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-num" id="stat-cats">—</span><span class="stat-label">Categories</span></div>
+      <div class="stat"><span class="stat-num" id="stat-packs">—</span><span class="stat-label">Packs</span></div>
+      <div class="stat"><span class="stat-num" id="stat-charts">—</span><span class="stat-label">☆12 Charts</span></div>
+      <div class="stat"><span class="stat-num" id="stat-shown">—</span><span class="stat-label">Currently Shown</span></div>
+    </div>
+
+    <div class="meta">
+      <span>難易度表: <a href="https://iidx-sp12.github.io/" target="_blank" rel="noopener">iidx-sp12.github.io</a></span>
+      <span class="sep">/</span>
+      <span>収録曲: <a href="https://p.eagate.573.jp/game/infinitas/2/music/index.html" target="_blank" rel="noopener">e-amusement</a></span>
+      <span class="sep">/</span>
+      <span>最終更新: <span id="updated-at">—</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="filters">
+  <div class="filters-inner">
+    <div class="filter-group">
+      <span class="filter-label">Mode</span>
+      <div class="seg" id="mode-seg" role="tablist">
+        <button data-mode="hard" class="on">ハード</button>
+        <button data-mode="normal">ノマゲ</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Tier</span>
+      <div class="chips" id="tier-chips">
+        <button class="chip chip-all on" data-tier="ALL">ALL</button>
+        <button class="chip on" data-tier="S+">S+</button>
+        <button class="chip on" data-tier="S">S</button>
+        <button class="chip on" data-tier="A+">A+</button>
+        <button class="chip on" data-tier="A">A</button>
+        <button class="chip on" data-tier="B+">B+</button>
+        <button class="chip on" data-tier="B">B</button>
+        <button class="chip on" data-tier="C">C</button>
+        <button class="chip on" data-tier="D">D</button>
+        <button class="chip on" data-tier="E">E</button>
+        <button class="chip on" data-tier="F">F</button>
+      </div>
+    </div>
+    <div class="filter-actions">
+      <span class="result-count" id="result-count"></span>
+      <button class="reset" id="btn-reset">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div id="loading" class="state-msg">
+  <span class="spinner"></span>データを読み込んでいます…
+</div>
+
+<div id="error" class="state-msg error" style="display:none"></div>
+
+<div class="layout" id="content" style="display:none">
+  <nav class="toc" aria-label="目次">
+    <div class="toc-block">
+      <p class="toc-title">CATEGORIES</p>
+      <ul id="toc-cats"></ul>
+    </div>
+    <div class="toc-block">
+      <p class="toc-title">PACKS</p>
+      <ul id="toc-packs"></ul>
+    </div>
+  </nav>
+  <main id="main"></main>
+</div>
+
+<footer class="site">
+  <div class="inner">
+    <p>
+      データ出典： <a href="https://iidx-sp12.github.io/" target="_blank" rel="noopener">SP☆12非公式難易度表</a>
+      / <a href="https://p.eagate.573.jp/game/infinitas/2/music/index.html" target="_blank" rel="noopener">KONAMI e-amusement (INFINITAS 収録曲)</a>
+    </p>
+    <p>
+      ★は楽曲パック内の "スペシャルセレクション" / "セレクション" 枠の楽曲。LEGGENDARIA譜面は、Lディスクの入手元が当該カテゴリ／パックに紐づくもののみ含まれます。<br>
+      本サイトは KONAMI および ☆12難易度表運営とは無関係の非公式な集計ページです。
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const TIER_ORDER = ['S+','S','A+','A','B+','B','C','D','E','F'];
+  let sections = [];
+  let mode = 'hard';
+  let activeTiers = new Set(TIER_ORDER);
+
+  fetch('data.json?_=' + Date.now(), { cache: 'no-cache' })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(doc => {
+      sections = doc.sections;
+      document.getElementById('stat-cats').textContent  = doc.stats.category_count;
+      document.getElementById('stat-packs').textContent = doc.stats.pack_count;
+      document.getElementById('stat-charts').textContent = doc.stats.chart_count;
+      document.getElementById('updated-at').textContent = formatDate(doc.generated_at);
+      render();
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('content').style.display = '';
+      applyFilters();
+    })
+    .catch(err => {
+      document.getElementById('loading').style.display = 'none';
+      const e = document.getElementById('error');
+      e.style.display = '';
+      e.textContent = 'データの読み込みに失敗しました: ' + err.message;
+    });
+
+  function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    const z = n => String(n).padStart(2,'0');
+    return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`;
+  }
+
+  function tierIdx(t) { const i = TIER_ORDER.indexOf(t); return i < 0 ? 99 : i; }
+
+  function sortRows(rows) {
+    return rows.slice().sort((a,b) => {
+      const d = tierIdx(a.ht) - tierIdx(b.ht);
+      if (d) return d;
+      return tierIdx(a.nt) - tierIdx(b.nt);
+    });
+  }
+
+  function rankBadge(label, tier, kojinsa) {
+    if (!label) return '<span class="empty">—</span>';
+    const cls = kojinsa ? 'badge kojinsa' : 'badge';
+    return `<span class="${cls}" data-tier="${tier}">${escapeHtml(label.replace('地力','').replace('個人差',''))}</span>`;
+  }
+  function escapeHtml(s){return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function shortPackName(name){return name.replace('beatmania IIDX INFINITAS ', '').replace(/\s*\(.*?\)\s*$/, '');}
+
+  function buildTable(rows) {
+    const tbl = document.createElement('table');
+    tbl.className = 'songs';
+    tbl.innerHTML = `
+      <thead><tr>
+        <th class="col-title">Title</th>
+        <th class="col-kind">譜面</th>
+        <th class="col-rank">ノマゲ</th>
+        <th class="col-rank">ハード</th>
+        <th class="col-ver">Ver.</th>
+      </tr></thead><tbody></tbody>`;
+    const tb = tbl.querySelector('tbody');
+    sortRows(rows).forEach(r => {
+      const tr = document.createElement('tr');
+      tr.dataset.nt = r.nt; tr.dataset.ht = r.ht;
+      tr.innerHTML = `
+        <td class="title-cell">${escapeHtml(r.t)}${r.y ? '<span class="star" title="スペシャルセレクション">★</span>' : ''}</td>
+        <td><span class="kind-pill kind-${r.k}">${r.k}</span></td>
+        <td class="rank-cell">${rankBadge(r.n, r.nt, r.nk)}</td>
+        <td class="rank-cell">${rankBadge(r.h, r.ht, r.hk)}</td>
+        <td class="ver-cell">${r.v}</td>`;
+      tb.appendChild(tr);
+    });
+    return tbl;
+  }
+
+  function render() {
+    const tocCats = document.getElementById('toc-cats');
+    const tocPacks = document.getElementById('toc-packs');
+    const main = document.getElementById('main');
+    tocCats.innerHTML = ''; tocPacks.innerHTML = ''; main.innerHTML = '';
+
+    let packIdx = 0;
+    sections.forEach((sec, i) => {
+      // Section element
+      const elSec = document.createElement('section');
+      elSec.className = 'sec';
+      elSec.id = 'sec-' + i;
+      elSec.dataset.idx = i;
+
+      const charts = sectionChartCount(sec);
+
+      // Header
+      const head = document.createElement('div');
+      head.className = 'sec-head';
+      const isPack = sec.type === 'pack';
+      const numLabel = isPack ? String(++packIdx).padStart(2,'0') : sec.id?.toUpperCase().slice(0,3) ?? '';
+      head.innerHTML = `
+        <span class="sec-num">${numLabel}</span>
+        <h2 class="sec-name">${escapeHtml(sec.name)}</h2>
+        <span class="sec-tag ${isPack ? 'pack' : 'cat'}">${isPack ? 'PACK' : 'CATEGORY'}</span>
+      `;
+      elSec.appendChild(head);
+
+      if (sec.subtitle) {
+        const st = document.createElement('p');
+        st.className = 'sec-subtitle';
+        st.textContent = sec.subtitle;
+        elSec.appendChild(st);
+      }
+
+      const meta = document.createElement('div');
+      meta.className = 'sec-meta';
+      meta.innerHTML = `<span class="visible-cnt" data-vis-idx="${i}">${charts}</span> / ${charts} ☆12 charts · source total ${sec.total} songs`;
+      elSec.appendChild(meta);
+
+      // Body
+      if (charts === 0) {
+        const e = document.createElement('div');
+        e.className = 'empty-pack';
+        e.textContent = '☆12難易度表に該当する譜面はありません。';
+        elSec.appendChild(e);
+      } else if (sec.groups) {
+        sec.groups.forEach((g, gi) => {
+          const gb = document.createElement('div');
+          gb.className = 'group-block';
+          gb.dataset.gIdx = gi;
+          const lab = document.createElement('div');
+          lab.className = 'group-label';
+          lab.innerHTML = `<span>${escapeHtml(g.label)}</span><span class="gcnt"><span class="g-vis" data-g-vis="${i}-${gi}">${g.rows.length}</span> / ${g.rows.length}</span>`;
+          gb.appendChild(lab);
+          gb.appendChild(buildTable(g.rows));
+          elSec.appendChild(gb);
+        });
+      } else {
+        elSec.appendChild(buildTable(sec.rows));
+      }
+      main.appendChild(elSec);
+
+      // TOC
+      const a = document.createElement('a');
+      a.href = '#sec-' + i;
+      a.dataset.idx = i;
+      if (isPack) {
+        a.className = 'toc-pack-link';
+        a.dataset.num = String(packIdx).padStart(2,'0');
+        a.innerHTML = `<span class="cnt" data-cnt-idx="${i}">${charts}</span>${escapeHtml(shortPackName(sec.name))}`;
+        if (charts === 0) a.classList.add('empty');
+        const li = document.createElement('li'); li.appendChild(a); tocPacks.appendChild(li);
+      } else {
+        a.className = 'toc-cat-link';
+        a.innerHTML = `<span class="cnt" data-cnt-idx="${i}">${charts}</span>${escapeHtml(sec.name)}`;
+        if (charts === 0) a.classList.add('empty');
+        const li = document.createElement('li'); li.appendChild(a); tocCats.appendChild(li);
+      }
+    });
+  }
+
+  function sectionChartCount(sec) {
+    if (sec.groups) return sec.groups.reduce((s,g) => s + g.rows.length, 0);
+    return (sec.rows || []).length;
+  }
+
+  function applyFilters() {
+    if (!sections.length) return;
+    const totalAll = sections.reduce((s, sec) => s + sectionChartCount(sec), 0);
+    let totalShown = 0, visibleSecs = 0;
+
+    sections.forEach((sec, i) => {
+      const elSec = document.getElementById('sec-' + i);
+      let secCnt = 0;
+
+      if (sec.groups) {
+        sec.groups.forEach((g, gi) => {
+          const gb = elSec.querySelector(`[data-g-idx="${gi}"]`);
+          if (!gb) return;
+          const trs = gb.querySelectorAll('tbody tr');
+          let gCnt = 0;
+          trs.forEach(tr => {
+            const t = mode === 'hard' ? tr.dataset.ht : tr.dataset.nt;
+            const visible = activeTiers.has(t);
+            tr.classList.toggle('hidden', !visible);
+            if (visible) gCnt++;
+          });
+          gb.classList.toggle('hidden', gCnt === 0);
+          const gv = gb.querySelector('.g-vis'); if (gv) gv.textContent = gCnt;
+          secCnt += gCnt;
+        });
+      } else {
+        const trs = elSec.querySelectorAll('tbody tr');
+        trs.forEach(tr => {
+          const t = mode === 'hard' ? tr.dataset.ht : tr.dataset.nt;
+          const visible = activeTiers.has(t);
+          tr.classList.toggle('hidden', !visible);
+          if (visible) secCnt++;
+        });
+      }
+
+      const visEl = elSec.querySelector(`[data-vis-idx="${i}"]`);
+      if (visEl) visEl.textContent = secCnt;
+
+      const totalCharts = sectionChartCount(sec);
+      // Hide section when filter actively excludes everything (and section had charts to begin with)
+      // If section has zero charts originally, hide it unless ALL tiers are active
+      let hideSec;
+      if (totalCharts === 0) {
+        hideSec = activeTiers.size !== TIER_ORDER.length;
+      } else {
+        hideSec = secCnt === 0;
+      }
+      elSec.classList.toggle('hidden', hideSec);
+
+      const tocLink = document.querySelector(`.toc a[data-idx="${i}"]`);
+      if (tocLink) {
+        const cntEl = tocLink.querySelector('.cnt');
+        if (cntEl) cntEl.textContent = secCnt;
+        tocLink.classList.toggle('hidden-pack', hideSec);
+        tocLink.classList.toggle('empty', secCnt === 0);
+      }
+
+      if (!hideSec) visibleSecs++;
+      totalShown += secCnt;
+    });
+
+    document.getElementById('stat-shown').textContent = totalShown;
+    document.getElementById('result-count').innerHTML =
+      `<strong>${totalShown}</strong> / ${totalAll} charts · <strong>${visibleSecs}</strong> sections`;
+  }
+
+  document.getElementById('mode-seg').addEventListener('click', e => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    document.querySelectorAll('#mode-seg button').forEach(b => b.classList.toggle('on', b === btn));
+    mode = btn.dataset.mode;
+    applyFilters();
+  });
+
+  document.getElementById('tier-chips').addEventListener('click', e => {
+    const chip = e.target.closest('.chip'); if (!chip) return;
+    const tier = chip.dataset.tier;
+    if (tier === 'ALL') {
+      const allOn = activeTiers.size === TIER_ORDER.length;
+      activeTiers = allOn ? new Set() : new Set(TIER_ORDER);
+    } else {
+      if (activeTiers.has(tier)) activeTiers.delete(tier); else activeTiers.add(tier);
+    }
+    syncChips(); applyFilters();
+  });
+  function syncChips() {
+    const all = activeTiers.size === TIER_ORDER.length;
+    document.querySelectorAll('#tier-chips .chip').forEach(c => {
+      if (c.dataset.tier === 'ALL') c.classList.toggle('on', all);
+      else c.classList.toggle('on', activeTiers.has(c.dataset.tier));
+    });
+  }
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    mode = 'hard';
+    activeTiers = new Set(TIER_ORDER);
+    document.querySelectorAll('#mode-seg button').forEach(b => b.classList.toggle('on', b.dataset.mode === 'hard'));
+    syncChips(); applyFilters();
+  });
+})();
+</script>
+</body>
+</html>
