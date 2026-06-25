@@ -4,6 +4,8 @@ beatmania IIDX INFINITAS の収録曲のうち、
 [SP☆12非公式難易度表](https://iidx-sp12.github.io/) に掲載されている譜面の難易度を、
 カテゴリ別に一覧できる対応表です。
 
+🔗 **公開ページ: https://laskarina.github.io/infinitas-sp12-packs/**
+
 **GitHub Actions による週次自動更新** に対応。新パック追加・難易度改定が反映されると、月曜の昼に `data.json` が自動更新されます。
 
 ## 対象カテゴリ
