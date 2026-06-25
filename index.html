@@ -161,6 +161,7 @@
   .chip[data-tier="D"].on  { background: var(--t-D);     border-color: var(--t-D);     }
   .chip[data-tier="E"].on  { background: var(--t-E);     border-color: var(--t-E);     }
   .chip[data-tier="F"].on  { background: var(--t-F);     border-color: var(--t-F);     }
+  .chip[data-tier="TBD"].on { background: var(--ink-mute); border-color: var(--ink-mute); }
   .chip-all { font-weight: 700; }
   .filter-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
   .reset {
@@ -393,6 +394,13 @@
   .rank-cell .badge[data-tier="E"]  { background: var(--t-E-bg);     color: var(--t-E);     }
   .rank-cell .badge[data-tier="F"]  { background: var(--t-F-bg);     color: var(--t-F);     }
   .rank-cell .empty { color: var(--ink-mute); }
+  .rank-cell .badge.tbd {
+    background: var(--rule-soft);
+    color: var(--ink-mute);
+    border-style: dashed;
+    border-color: var(--rule);
+    font-weight: 500;
+  }
   .ver-cell {
     font-family: 'JetBrains Mono', monospace;
     color: var(--ink-mute);
@@ -517,6 +525,7 @@
         <button class="chip on" data-tier="D">D</button>
         <button class="chip on" data-tier="E">E</button>
         <button class="chip on" data-tier="F">F</button>
+        <button class="chip on" data-tier="TBD" title="難易度未確定（☆12だが難易度表に未掲載）">未確定</button>
       </div>
     </div>
     <div class="filter-actions">
@@ -562,9 +571,12 @@
 <script>
 (function(){
   const TIER_ORDER = ['S+','S','A+','A','B+','B','C','D','E','F'];
+  // 難易度未確定（☆12だが難易度表に未掲載）の擬似ティア
+  const TBD = 'TBD';
+  const FILTER_TIERS = [...TIER_ORDER, TBD];
   let sections = [];
   let mode = 'hard';
-  let activeTiers = new Set(TIER_ORDER);
+  let activeTiers = new Set(FILTER_TIERS);
 
   fetch('data.json?_=' + Date.now(), { cache: 'no-cache' })
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
@@ -604,8 +616,8 @@
     });
   }
 
-  function rankBadge(label, tier, kojinsa) {
-    if (!label) return '<span class="empty">—</span>';
+  function rankBadge(label, tier, kojinsa, tbd) {
+    if (!label) return tbd ? '<span class="badge tbd">未確定</span>' : '<span class="empty">—</span>';
     const cls = kojinsa ? 'badge kojinsa' : 'badge';
     return `<span class="${cls}" data-tier="${tier}">${escapeHtml(label.replace('地力','').replace('個人差',''))}</span>`;
   }
@@ -626,12 +638,14 @@
     const tb = tbl.querySelector('tbody');
     sortRows(rows).forEach(r => {
       const tr = document.createElement('tr');
+      const tbd = !r.nt && !r.ht;   // ノマゲ・ハードとも難易度未確定
       tr.dataset.nt = r.nt; tr.dataset.ht = r.ht;
+      tr.dataset.tbd = tbd ? '1' : '';
       tr.innerHTML = `
         <td class="title-cell">${escapeHtml(r.t)}${r.y ? '<span class="star" title="スペシャルセレクション">★</span>' : ''}</td>
         <td><span class="kind-pill kind-${r.k}">${r.k}</span></td>
-        <td class="rank-cell">${rankBadge(r.n, r.nt, r.nk)}</td>
-        <td class="rank-cell">${rankBadge(r.h, r.ht, r.hk)}</td>
+        <td class="rank-cell">${rankBadge(r.n, r.nt, r.nk, tbd)}</td>
+        <td class="rank-cell">${rankBadge(r.h, r.ht, r.hk, tbd)}</td>
         <td class="ver-cell">${r.v}</td>`;
       tb.appendChild(tr);
     });
@@ -741,7 +755,7 @@
           const trs = gb.querySelectorAll('tbody tr');
           let gCnt = 0;
           trs.forEach(tr => {
-            const t = mode === 'hard' ? tr.dataset.ht : tr.dataset.nt;
+            const t = (mode === 'hard' ? tr.dataset.ht : tr.dataset.nt) || TBD;
             const visible = activeTiers.has(t);
             tr.classList.toggle('hidden', !visible);
             if (visible) gCnt++;
@@ -753,7 +767,7 @@
       } else {
         const trs = elSec.querySelectorAll('tbody tr');
         trs.forEach(tr => {
-          const t = mode === 'hard' ? tr.dataset.ht : tr.dataset.nt;
+          const t = (mode === 'hard' ? tr.dataset.ht : tr.dataset.nt) || TBD;
           const visible = activeTiers.has(t);
           tr.classList.toggle('hidden', !visible);
           if (visible) secCnt++;
@@ -768,7 +782,7 @@
       // If section has zero charts originally, hide it unless ALL tiers are active
       let hideSec;
       if (totalCharts === 0) {
-        hideSec = activeTiers.size !== TIER_ORDER.length;
+        hideSec = activeTiers.size !== FILTER_TIERS.length;
       } else {
         hideSec = secCnt === 0;
       }
@@ -802,15 +816,15 @@
     const chip = e.target.closest('.chip'); if (!chip) return;
     const tier = chip.dataset.tier;
     if (tier === 'ALL') {
-      const allOn = activeTiers.size === TIER_ORDER.length;
-      activeTiers = allOn ? new Set() : new Set(TIER_ORDER);
+      const allOn = activeTiers.size === FILTER_TIERS.length;
+      activeTiers = allOn ? new Set() : new Set(FILTER_TIERS);
     } else {
       if (activeTiers.has(tier)) activeTiers.delete(tier); else activeTiers.add(tier);
     }
     syncChips(); applyFilters();
   });
   function syncChips() {
-    const all = activeTiers.size === TIER_ORDER.length;
+    const all = activeTiers.size === FILTER_TIERS.length;
     document.querySelectorAll('#tier-chips .chip').forEach(c => {
       if (c.dataset.tier === 'ALL') c.classList.toggle('on', all);
       else c.classList.toggle('on', activeTiers.has(c.dataset.tier));
@@ -818,7 +832,7 @@
   }
   document.getElementById('btn-reset').addEventListener('click', () => {
     mode = 'hard';
-    activeTiers = new Set(TIER_ORDER);
+    activeTiers = new Set(FILTER_TIERS);
     document.querySelectorAll('#mode-seg button').forEach(b => b.classList.toggle('on', b.dataset.mode === 'hard'));
     syncChips(); applyFilters();
   });
