@@ -87,12 +87,32 @@ def clean(s: str) -> str:
     return html.unescape(re.sub(r"<[^>]+>", "", s)).strip()
 
 
+PACK_HEADER_RE = re.compile(r'<div class="cat"[^>]*>\s*<strong>楽曲パック</strong>')
+
+
+def section_start(html_text: str, sec_id: str) -> int:
+    """Index of the section marker id="<sec_id>".
+
+    The pack section's header div has been published both with and without
+    id="pac", so fall back to locating it by its 楽曲パック heading.
+    """
+    try:
+        return html_text.index(f'id="{sec_id}"')
+    except ValueError:
+        if sec_id != "pac":
+            raise
+        m = PACK_HEADER_RE.search(html_text)
+        if not m:
+            raise
+        return m.start()
+
+
 # ────────────────────────────────────────────────────────────────────
 # Pack section parser
 # ────────────────────────────────────────────────────────────────────
 def parse_packs(html_text: str) -> list[dict]:
     try:
-        m_start = html_text.index('id="pac"')
+        m_start = section_start(html_text, "pac")
         m_leg = html_text.index('id="leg"')
     except ValueError as e:
         raise RuntimeError(f"Pack section markers not found: {e}")
@@ -139,8 +159,8 @@ def parse_packs(html_text: str) -> list[dict]:
 # Category parser (newsong / default / djp / bit)
 # ────────────────────────────────────────────────────────────────────
 def parse_category(html_text: str, sec_id: str, next_id: str) -> dict:
-    s = html_text.index(f'id="{sec_id}"')
-    e = html_text.index(f'id="{next_id}"')
+    s = section_start(html_text, sec_id)
+    e = section_start(html_text, next_id)
     body = html_text[s:e]
 
     sub_match = re.search(
